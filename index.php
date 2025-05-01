@@ -1,12 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/design/default.css">
-    <title>Portfolio</title>
-</head>
-<body>
+<?php 
+
+require('controller/Controller.php');
+
+try{
+    if(isset($_GET['page'])){
+        if($_GET['page'] == 'home'){
+            displayHome();
+        }else{
+            throw new Exception('Page introuvable');
+        }
+    }
     
-</body>
-</html>
+} catch (Exception $e) {
+    die('Erreur : ' . $e->getMessage());
+}
+
