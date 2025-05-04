@@ -24,16 +24,15 @@
     </header>
 
     <main>
-        <section id="projects">
-            <h2>Mes Projets</h2>
-            <?php if (!isset($projects)) {
-                die('Erreur: projects non défini');
+        <section id="articles">
+            <h2>Mes Articles</h2>
+            <?php if (!isset($articles)) {
+                die('Erreur: articles non défini');
             }
-            while ($project = $projects->fetch()): ?>
-                <div class="project">
-                    <h3><?= htmlspecialchars($project['title']) ?></h3>
-                    <img src="<?= htmlspecialchars($project['image']) ?>" alt="<?= htmlspecialchars($project['title']) ?>">
-                    <p><?= htmlspecialchars($project['description']) ?></p>
+            while ($article = $articles->fetch()): ?>
+                <div class="article">
+                    <h3><?= htmlspecialchars($article['title']) ?></h3>
+                    <p><?= htmlspecialchars($article['content']) ?></p>
                 </div>
             <?php endwhile; ?>
         </section>
