@@ -1,52 +1,29 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php ob_start(); ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/design/css/default.css">
-    <title>Claire-Lise Démettre - Portfolio</title>
-</head>
+<?php include('./hero.php'); ?>
 
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#articles">Articles</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <section id="hero">
-            <h1>Bienvenue sur mon portfolio</h1>
-            <p>Je suis Claire-Lise Démettre, développeuse web.</p>
-        </section>
-    </header>
+<main>
+    <div class="container">
+    <section id="projects">
+        <h2>Mes Projets</h2>
+        <?php if (!isset($projects)) {
+            die('Erreur: projects non défini');
+        }
+        while ($project = $projects->fetch()): ?>
+            <div class="project">
+                <h3><?= htmlspecialchars($project['title']) ?></h3>
+                <img src="<?= htmlspecialchars($project['image']) ?>" alt="<?= htmlspecialchars($project['title']) ?>">
+                <p><?= htmlspecialchars($project['description']) ?></p>
+            </div>
+        <?php endwhile; ?>
+    </section>
 
-    <main>
-        <section id="projects">
-            <h2>Mes Projets</h2>
-            <?php if (!isset($projects)) {
-                die('Erreur: projects non défini');
-            }
-            while ($project = $projects->fetch()): ?>
-                <div class="project">
-                    <h3><?= htmlspecialchars($project['title']) ?></h3>
-                    <img src="<?= htmlspecialchars($project['image']) ?>" alt="<?= htmlspecialchars($project['title']) ?>">
-                    <p><?= htmlspecialchars($project['description']) ?></p>
-                </div>
-            <?php endwhile; ?>
-        </section>
-
-        <section id="contact">
-            <h2>Contactez-moi</h2>
-            <!-- Formulaire de contact -->
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Claire-Lise Démettre. Tous droits réservés.</p>
-    </footer>
-</body>
-
-</html>
+    <section id="contact">
+        <h2>Contactez-moi</h2>
+        <!-- Formulaire de contact -->
+    </section>
+        </div>
+</main>
+<?php
+$content = ob_get_clean();
+require('./base.php');

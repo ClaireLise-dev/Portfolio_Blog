@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "sass --load-path=node_modules public/design/sass/default.scss public/design/css/default.css --style=compressed --watch"
   },
   "repository": {
     "type": "git",

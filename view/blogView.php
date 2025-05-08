@@ -1,51 +1,31 @@
-<!DOCTYPE html>
-<html lang="fr">
+<?php ob_start(); ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/design/css/default.css">
-    <title>Claire-Lise Démettre - Portfolio</title>
-</head>
+<?php include('./hero.php'); ?>
 
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#projects">Projets</a></li>
-                <li><a href="#articles">Articles</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <section id="hero">
-            <h1>Bienvenue sur mon portfolio</h1>
-            <p>Je suis Claire-Lise Démettre, développeuse web.</p>
-        </section>
-    </header>
 
-    <main>
-        <section id="articles">
-            <h2>Mes Articles</h2>
-            <?php if (!isset($articles)) {
-                die('Erreur: articles non défini');
-            }
-            while ($article = $articles->fetch()): ?>
-                <div class="article">
-                    <h3><?= htmlspecialchars($article['title']) ?></h3>
-                    <p><?= htmlspecialchars($article['content']) ?></p>
-                </div>
-            <?php endwhile; ?>
-        </section>
 
-        <section id="contact">
-            <h2>Contactez-moi</h2>
-            <!-- Formulaire de contact -->
-        </section>
-    </main>
+<main>
+    <div class="container">
+    <section id="articles">
+        <h2>Mes Articles</h2>
+        <?php if (!isset($articles)) {
+            die('Erreur: articles non défini');
+        }
+        while ($article = $articles->fetch()): ?>
+            <div class="article">
+                <h3><?= htmlspecialchars($article['title']) ?></h3>
+                <p><?= htmlspecialchars($article['content']) ?></p>
+            </div>
+        <?php endwhile; ?>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 Claire-Lise Démettre. Tous droits réservés.</p>
-    </footer>
-</body>
+    <section id="contact">
+        <h2>Contactez-moi</h2>
+        <!-- Formulaire de contact -->
+    </section>
+    </div>
+</main>
 
-</html>
+<?php
+$content = ob_get_clean();
+require('./base.php');
