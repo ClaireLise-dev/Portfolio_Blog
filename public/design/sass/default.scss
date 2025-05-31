@@ -1,4 +1,6 @@
 // public/design/sass/test-bootstrap-import.scss
 @import "_variables.scss";
-@import "_base.scss";
 @import "bootstrap/scss/bootstrap";
+
+@import "_base.scss";
+@import "_hero.scss";
