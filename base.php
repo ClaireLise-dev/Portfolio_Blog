@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="public/design/css/default.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-
     <title>Claire-Lise Démettre - Portfolio</title>
 </head>
 
@@ -24,8 +23,7 @@
                 </button>
                 <div id="navbarNav" class="collapse navbar-collapse justify-content-end ">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#projects">PROJETS</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#articles">ARTICLES</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#accueil">ACCUEIL</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
                         <li class="nav-item"><a class="nav-link" href="#connexion">CONNEXION</a></li>
                     </ul>
@@ -43,16 +41,7 @@
             <p>&copy;<?= date('Y') ?> Claire-Lise Démettre. Tous droits réservés.</p>
         </div>
     </footer>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-  const navbar = document.querySelector('.navbar'); 
-    if (window.scrollY > 10) { 
-      navbar.classList.add('transparent');
-    } else {
-      navbar.classList.remove('transparent');
-    }
-  });
-</script>
+    <script src="./assets/index.js"></script>
 </body>
 
 </html>

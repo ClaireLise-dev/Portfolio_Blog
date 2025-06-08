@@ -3,34 +3,26 @@
 
 <main>
     <div class="container">
-        <h2>Mes Projets</h2>
+        <div class="filterContainer rounded-pill row justify-content-center my-4">
+
+            <div class="col-12 col-md-4"><button id="btnWeb" data-type="projects" class="filterBtn rounded-pill w-100">Projets Web</button></div>
+            <div class="col-12 col-md-4"> <button id="btnWp" data-type="projects" class="filterBtn rounded-pill w-100">WordPress</button></div>
+            <div class="col-12 col-md-4"><button id="btnArticles" data-type="projects" class="filterBtn rounded-pill w-100">Articles</button></div>
+
+        </div>
+
+
+
+
         <section id="projects">
-            <div class="row">
-                <?php if (!isset($projects)) {
-                    die('Erreur: projects non défini');
-                }
-                while ($project = $projects->fetch()): ?>
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100 text-white bg-dark">
-                            <div class="position-relative">
 
-                                <img src="<?= htmlspecialchars($project['image']) ?>" class="card-img-top object-fit-cover opacity-75" alt="<?= htmlspecialchars($project['title']) ?>">
+                <div class="row" id="projectsContent">
+                    <?php
+                    $_GET['type'] = 'projects'; // affichage initial
+                    include('view/partials/projectsList.php');
+                    ?>
+                </div>
 
-                                <div class="position-absolute top-50 start-50 translate-middle w-100 text-center">
-                                    <h3 class="card-title text-center text-white fs-2 fw-bold">
-                                        <?= htmlspecialchars($project['title']) ?>
-                                    </h3>
-                                </div>
-                            </div>
-
-                            <div class="card-body">
-                                <p class="card-text text-secondary"><?= htmlspecialchars($project['description']) ?></p>
-                                <!-- <a href="<?= htmlspecialchars($project['link']) ?>" class="btn btn-primary">Voir le projet</a> -->
-                            </div>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            </div>
         </section>
 
         <section id="contact">

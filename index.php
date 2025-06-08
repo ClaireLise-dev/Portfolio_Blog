@@ -6,8 +6,8 @@ try{
     if(isset($_GET['page'])){
         if($_GET['page'] == 'home'){
             displayHome();
-        }elseif($_GET['page'] == 'blog'){
-            displayBlog();
+        // }elseif($_GET['page'] == 'blog'){
+        //     displayBlog();
         }else{
             throw new Exception('Page introuvable');
         }

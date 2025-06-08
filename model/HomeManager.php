@@ -13,4 +13,10 @@ class HomeManager extends Manager{
         $requete = $bdd->query('SELECT * FROM articles');
         return $requete;
     }
+
+    public function getWordpress() {
+        $bdd = $this->connection();
+        $requete = $bdd->query('SELECT * FROM wordpress');
+        return $requete;
+    }    
 }
