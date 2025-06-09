@@ -7,23 +7,24 @@ function loadProjects(type) {
     .catch((error) => console.error("Erreur chargement projets :", error));
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const navbar = document.querySelector(".navbar");
-  if (window.scrollY > 10) {
-    navbar.classList.add("transparent");
-  } else {
-    navbar.classList.remove("transparent");
-  }
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   const navbar = document.querySelector(".navbar");
+//   if (window.scrollY > 10) {
+//     navbar.classList.add("transparent");
+//   } else {
+//     navbar.classList.remove("transparent");
+//   }
+// });
 
-document.addEventListener("DOMContentLoaded", () => {
-  document
-    .querySelector("#btnWeb")
-    .addEventListener("click", () => loadProjects("projects"));
-  document
-    .querySelector("#btnWp")
-    .addEventListener("click", () => loadProjects("wordpress"));
-  document
-    .querySelector("#btnArticles")
-    .addEventListener("click", () => loadProjects("articles"));
+document.querySelectorAll(".filterBtn").forEach((button) => {
+  button.addEventListener("click", () => {
+    document
+      .querySelectorAll(".filterBtn")
+      .forEach((b) => b.classList.remove("active"));
+
+    button.classList.add("active");
+
+    const type = button.dataset.type;
+    loadProjects(type);
+  });
 });

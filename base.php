@@ -15,7 +15,7 @@
 
             <div class="container">
                 <div class="navbar-brand">
-                    <a href="index.php" class="text-decoration-none text-white">CLAIRE-LISE DEMETTRE</a>
+                    <a href="?page=home" class="text-decoration-none text-white">CLAIRE-LISE DEMETTRE</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,8 +23,8 @@
                 </button>
                 <div id="navbarNav" class="collapse navbar-collapse justify-content-end ">
                     <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="#accueil">ACCUEIL</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">CONTACT</a></li>
+                        <li class="nav-item"><a class="nav-link" href="?page=home">ACCUEIL</a></li>
+                        <li class="nav-item"><a class="nav-link" href="?page=contact">CONTACT</a></li>
                         <li class="nav-item"><a class="nav-link" href="#connexion">CONNEXION</a></li>
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
     </header>
     <?= $content ?>
     <footer>
-        <div class="container">
+        <div class="container text-center">
             <p>&copy;<?= date('Y') ?> Claire-Lise Démettre. Tous droits réservés.</p>
         </div>
     </footer>

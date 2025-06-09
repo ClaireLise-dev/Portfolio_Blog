@@ -5,9 +5,9 @@
     <div class="container">
         <div class="filterContainer rounded-pill row justify-content-center my-4">
 
-            <div class="col-12 col-md-4"><button id="btnWeb" data-type="projects" class="filterBtn rounded-pill w-100">Projets Web</button></div>
-            <div class="col-12 col-md-4"> <button id="btnWp" data-type="projects" class="filterBtn rounded-pill w-100">WordPress</button></div>
-            <div class="col-12 col-md-4"><button id="btnArticles" data-type="projects" class="filterBtn rounded-pill w-100">Articles</button></div>
+            <div class="col-12 col-md-4"><button id="btnWeb" data-type="projects" class="filterBtn active rounded-pill w-100">Projets Web</button></div>
+            <div class="col-12 col-md-4"> <button id="btnWp" data-type="wordpress" class="filterBtn rounded-pill w-100">WordPress</button></div>
+            <div class="col-12 col-md-4"><button id="btnArticles" data-type="articles" class="filterBtn rounded-pill w-100">Articles</button></div>
 
         </div>
 
@@ -18,16 +18,16 @@
 
                 <div class="row" id="projectsContent">
                     <?php
-                    $_GET['type'] = 'projects'; // affichage initial
+                    $_GET['type'] = 'projects';
                     include('view/partials/projectsList.php');
                     ?>
                 </div>
 
         </section>
 
-        <section id="contact">
-            <h2>Contactez-moi</h2>
-            <!-- Formulaire de contact -->
+        <section id="contact" class="sticky-bottom text-end my-5">
+        <a href="?page=contact" class="btn btn-outline-secondary rounded-pill">Contact</a>
+  
         </section>
     </div>
 </main>
