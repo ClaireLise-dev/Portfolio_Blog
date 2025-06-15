@@ -7,15 +7,6 @@ function loadProjects(type) {
     .catch((error) => console.error("Erreur chargement projets :", error));
 }
 
-// document.addEventListener("DOMContentLoaded", function () {
-//   const navbar = document.querySelector(".navbar");
-//   if (window.scrollY > 10) {
-//     navbar.classList.add("transparent");
-//   } else {
-//     navbar.classList.remove("transparent");
-//   }
-// });
-
 document.querySelectorAll(".filterBtn").forEach((button) => {
   button.addEventListener("click", () => {
     document
@@ -28,3 +19,17 @@ document.querySelectorAll(".filterBtn").forEach((button) => {
     loadProjects(type);
   });
 });
+
+const alertBox = document.getElementById("alert-message");
+if (alertBox) {
+  setTimeout(() => {
+    alertBox.style.transition = "opacity 0.5s ease-in-out";
+    alertBox.style.opacity = "0";
+
+    setTimeout(() => {
+      if (alertBox.parentNode) {
+        alertBox.parentNode.removeChild(alertBox);
+      }
+    }, 500);
+  }, 5000);
+}

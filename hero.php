@@ -1,6 +1,6 @@
-<section id="hero" class=" container d-flex flex-column justify-content-end rounded my-3">
+<section id="hero" class="container d-flex flex-column justify-content-end rounded my-3">
     <div >
-    <h1>Bienvenue sur mon portfolio</h1>
-    <p>Je suis Claire-Lise Démettre, développeuse web.</p>
+    <h1>De l'harmonie des sons à l'équilibre du code</h1>
+    <p><i>Créer, structurer, transmettre</i></p>
     </div>
 </section>

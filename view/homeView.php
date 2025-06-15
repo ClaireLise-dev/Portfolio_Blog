@@ -1,7 +1,6 @@
 <?php ob_start(); ?>
 <?php include('./hero.php'); ?>
 
-<main>
     <div class="container">
         <div class="filterContainer rounded-pill row justify-content-center my-4">
 
@@ -26,11 +25,11 @@
         </section>
 
         <section id="contact" class="sticky-bottom text-end my-5">
-        <a href="?page=contact" class="btn btn-outline-secondary rounded-pill">Contact</a>
+        <a href="?page=contact" class="btn btn-outline-primary rounded-pill">Contact</a>
   
         </section>
     </div>
-</main>
+
 
 <?php
 $content = ob_get_clean();

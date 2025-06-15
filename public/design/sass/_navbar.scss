@@ -1,0 +1,20 @@
+.navbar-dark .navbar-nav .nav-link {
+  color: #ff883c !important;
+
+  &:hover,
+  &:focus {
+    color: #91461e !important;
+  }
+
+  &.active {
+    color: #91461e !important;
+  }
+}
+
+.navbar-brand a {
+  color: #dd7232 !important;
+
+  &:hover {
+    color: #91461e !important;
+  }
+}

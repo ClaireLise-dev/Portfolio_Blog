@@ -1,2 +1,18 @@
-$secondary: #b9b9ba;
-$dark: #000;
+$primary: #ff883c;
+$secondary: #1e2656;
+$dark: #11132e;
+$info: #91461e;
+$white: #f0f0f0;
+
+$navbar-dark-color: rgba($primary, 0.9);
+$navbar-dark-hover-color: rgba($info, 1);
+$navbar-dark-active-color: $navbar-dark-hover-color;
+
+$nav-link-color: $primary;
+$nav-link-hover-color: $info;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "info": $info,
+);
