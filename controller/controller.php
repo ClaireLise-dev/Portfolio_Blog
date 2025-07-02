@@ -2,6 +2,8 @@
 
 require('model/HomeManager.php');
 require('model/ContactManager.php');
+require('model/ProjectManager.php');
+require('model/AdminManager.php');
 
 function displayHome() {
     $model = new HomeManager();
@@ -23,4 +25,152 @@ function displayContact() {
         }
     }               
     require('view/contactView.php');
+}
+
+function displayProject() {
+    if (!isset($_GET['id']) || !isset($_GET['type'])) {
+        $errorMessage = "Projet introuvable.";
+        require('view/projectWebView.php');
+        return;
+    }
+
+    $id = (int) $_GET['id'];
+    $type = $_GET['type'];
+
+    $manager = new ProjectManager(); 
+    $project = $manager->getProjectById($id, $type);
+
+    if (!$project) {
+        $errorMessage = "Projet non trouvé.";
+    }
+
+    switch ($type) {
+        case 'wordpress':
+            require('view/projectWordpressView.php');
+            break;
+        case 'projects':
+            require('view/projectWebView.php');
+            break;
+        default:
+            require('view/ArticleView.php');
+            break;
+    }
+}
+
+function displayLoginForm(){
+    session_start();
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        if (empty($email) || empty($password)) {
+            $errorMessage = "Veuillez remplir tous les champs.";
+        } else {
+            $adminManager = new AdminManager();
+            $admin = $adminManager->getAdminByEmail($email);
+
+            if ($admin && password_verify($password, $admin['password'])) {
+                $_SESSION['admin'] = $admin['email'];
+                $successMessage = "Connexion réussie !";
+                header('Location: ?page=admin');
+            } else {
+                $errorMessage = "Email ou mot de passe incorrect.";
+            }
+        }
+    }
+    require('view/loginView.php');
+}
+
+function displayAdmin() {
+    session_start();
+    if (!isset($_SESSION['admin'])) {
+        header('Location: ?page=login');
+        exit;
+    }
+
+    $manager = new ProjectManager();
+    $projects = $manager->getAll('projects');
+    $wordpress = $manager->getAll('wordpress');
+    $articles = $manager->getAll('articles');
+
+    require('view/adminView.php');
+}
+
+function displayAddProjectForm() {
+    require('view/addProjectView.php');
+}
+
+
+function addProject() {
+    session_start();
+    if (!isset($_SESSION['admin'])) {
+        header('Location: ?page=login');
+        exit;
+    }
+
+    $manager = new ProjectManager();
+
+    $type = $_POST['type'] ?? '';
+    $title = $_POST['title'] ?? '';
+    $subtitle = $_POST['subtitle'] ?? '';
+    $image = $_FILES['image']['name'] ?? '';
+
+
+    if ($image && isset($_FILES['image']['tmp_name'])) {
+        $target = 'public/img/' . basename($image);
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+    }
+
+    $data = [
+        'title' => $title,
+        'subtitle' => $subtitle,
+        'image' => $image
+    ];
+
+    if ($type === 'projects') {
+        $data += [
+            'description' => $_POST['description'] ?? '',
+            'features' => $_POST['features'] ?? '',
+            'technologies' => $_POST['technologies'] ?? '',
+            'site_link' => $_POST['site_link'] ?? '',
+            'github_link' => $_POST['github_link'] ?? ''
+        ];
+    } elseif ($type === 'wordpress') {
+        $data += [
+            'description' => $_POST['description'] ?? '',
+            'features' => $_POST['features'] ?? '',
+            'role' => $_POST['role'] ?? '',
+            'site_link' => $_POST['site_link'] ?? ''
+        ];
+    } elseif ($type === 'articles') {
+        $data += [
+            'content' => $_POST['content'] ?? ''
+        ];
+    } else {
+        $errorMessage = "Type de projet non reconnu.";
+        require('view/addProjectView.php');
+        return;
+    }
+
+    $success = $manager->insertProject($type, $data);
+
+    if ($success) {
+        $successMessage = "Projet ajouté avec succès.";
+    } else {
+        $errorMessage = "Erreur lors de l'ajout du projet.";
+    }
+
+    require('view/addProjectView.php');
+}
+function deleteProject() {
+    session_start();
+    if (!isset($_SESSION['admin'])) {
+        header('Location: ?page=show-login');
+        exit;
+    }
+
+    $manager = new ProjectManager();
+    $manager->deleteProject((int) $_POST['id'], $_POST['type']);
+    header('Location: ?page=admin');
 }
