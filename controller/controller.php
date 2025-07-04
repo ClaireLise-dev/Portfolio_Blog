@@ -163,6 +163,7 @@ function addProject() {
 
     require('view/addProjectView.php');
 }
+
 function deleteProject() {
     session_start();
     if (!isset($_SESSION['admin'])) {

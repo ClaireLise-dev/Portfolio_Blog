@@ -13,18 +13,18 @@ class ProjectManager extends Manager
         }
 
         $bdd = $this->connection();
-        $stmt = $bdd->prepare("SELECT * FROM $type WHERE id = ?");
-        $stmt->execute([$id]);
+        $requete = $bdd->prepare("SELECT * FROM $type WHERE id = ?");
+        $requete->execute([$id]);
 
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $requete->fetch(PDO::FETCH_ASSOC);
     }
 
     public function getAll(string $type) {
         if (!in_array($type, $this->allowedTables)) return [];
     
         $bdd = $this->connection();
-        $stmt = $bdd->query("SELECT * FROM $type ORDER BY id DESC");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $requete = $bdd->query("SELECT * FROM $type ORDER BY id DESC");
+        return $requete->fetchAll(PDO::FETCH_ASSOC);
     }
 
    public function insertProject(string $type, array $data): bool
@@ -39,19 +39,19 @@ class ProjectManager extends Manager
     $placeholders = array_map(fn($f) => ':' . $f, $fields);
 
     $sql = "INSERT INTO $type (" . implode(', ', $fields) . ") VALUES (" . implode(', ', $placeholders) . ")";
-    $stmt = $bdd->prepare($sql);
+    $requete = $bdd->prepare($sql);
 
 
     foreach ($data as $key => $value) {
-        $stmt->bindValue(":$key", $value);
+        $requete->bindValue(":$key", $value);
     }
 
-    return $stmt->execute();
+    return $requete->execute();
 }
     
     public function deleteProject(int $id, string $type) {
         $bdd = $this->connection();
-        $stmt = $bdd->prepare("DELETE FROM $type WHERE id = ?");
-        $stmt->execute([$id]);
+        $requete = $bdd->prepare("DELETE FROM $type WHERE id = ?");
+        $requete->execute([$id]);
     }
 }

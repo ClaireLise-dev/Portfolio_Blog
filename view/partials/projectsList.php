@@ -26,7 +26,7 @@ while ($project = $projects->fetch()):
   <a href="?page=project&id=<?= $project['id'] ?>&type=<?= urlencode($type) ?>" class="text-decoration-none text-light">
   <div class="card h-100 text-white bg-black border-0 overflow-hidden">
   
-    <img src="<?= htmlspecialchars($project['image']) ?>" class="card-img-top opacity-75"
+    <img src="/public/img/<?= htmlspecialchars($project['image']) ?>" class="card-img-top opacity-75"
          alt="<?= htmlspecialchars($project['title']) ?>">
  <div class="card-body">
   <h2 class="card-title text-primary fs-5 my-2">

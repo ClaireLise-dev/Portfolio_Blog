@@ -13,7 +13,7 @@
 
   <?php if (!empty($project['image'])): ?>
     <div class="text-center mb-5">
-      <img src="<?= htmlspecialchars($project['image']) ?>" alt="Image du projet" class="img-fluid rounded shadow-sm" style="max-height: 400px; object-fit: cover;">
+      <img src="public/img/<?= htmlspecialchars($project['image']) ?>" alt="Image du projet" class="img-fluid rounded shadow-sm" style="max-height: 400px; object-fit: cover;">
     </div>
   <?php endif; ?>
 
