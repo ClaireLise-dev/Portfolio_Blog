@@ -164,6 +164,96 @@ function addProject() {
     require('view/addProjectView.php');
 }
 
+function displayEditProjectForm()
+{
+    if (!isset($_GET['id']) || !isset($_GET['type'])) {
+        $errorMessage = "ID ou type de projet manquant.";
+        require 'view/editProjectView.php';
+        return;
+    }
+
+    $id = $_GET['id'];
+    $type = $_GET['type'];
+
+    $projectManager = new ProjectManager();
+
+    $project = $projectManager->getProjectById($id, $type);
+
+    if (!$project) {
+        $errorMessage = "Projet introuvable ou type invalide.";
+    }
+
+    require 'view/editProjectView.php';
+}
+
+function updateProject() {
+    session_start();
+    if (!isset($_SESSION['admin'])) {
+        header('Location: ?page=login');
+        exit;
+    }
+
+    $manager = new ProjectManager();
+
+    $type = $_POST['type'] ?? '';
+    $id = $_POST['id'] ?? '';
+    $title = $_POST['title'] ?? '';
+    $subtitle = $_POST['subtitle'] ?? '';
+    $image = $_FILES['image']['name'] ?? '';
+
+    if ($image && isset($_FILES['image']['tmp_name']) && $_FILES['image']['tmp_name']) {
+        $target = 'public/img/' . basename($image);
+        move_uploaded_file($_FILES['image']['tmp_name'], $target);
+    } else {
+        $existing = $manager->getProjectById($id, $type);
+        $image = $existing['image'] ?? '';
+    }
+
+    $data = [
+        'title' => $title,
+        'subtitle' => $subtitle,
+        'image' => $image
+    ];
+
+    if ($type === 'projects') {
+        $data += [
+            'description' => $_POST['description'] ?? '',
+            'features' => $_POST['features'] ?? '',
+            'technologies' => $_POST['technologies'] ?? '',
+            'site_link' => $_POST['site_link'] ?? '',
+            'github_link' => $_POST['github_link'] ?? ''
+        ];
+    } elseif ($type === 'wordpress') {
+        $data += [
+            'description' => $_POST['description'] ?? '',
+            'features' => $_POST['features'] ?? '',
+            'role' => $_POST['role'] ?? '',
+            'site_link' => $_POST['site_link'] ?? ''
+        ];
+    } elseif ($type === 'articles') {
+        $data += [
+            'content' => $_POST['content'] ?? ''
+        ];
+    } else {
+        $errorMessage = "Type de projet non reconnu.";
+        require('view/editProjectView.php');
+        return;
+    }
+
+    $success = $manager->updateProject($type, $id, $data);
+
+    if ($success) {
+        header('Location: ?page=admin');
+        exit;
+    } else {
+        $errorMessage = "Erreur lors de la mise à jour du projet.";
+        $project = $manager->getProjectById($id, $type);
+        require('view/editProjectView.php');
+    }
+}
+
+
+
 function deleteProject() {
     session_start();
     if (!isset($_SESSION['admin'])) {
@@ -171,7 +261,17 @@ function deleteProject() {
         exit;
     }
 
+    $id = $_GET['id'] ?? null;
+    $type = $_GET['type'] ?? null;
+
+    if (!$id || !$type) {
+        echo "Paramètres manquants.";
+        exit;
+    }
+
     $manager = new ProjectManager();
-    $manager->deleteProject((int) $_POST['id'], $_POST['type']);
+    $manager->deleteProject((int) $id, $type);
+
     header('Location: ?page=admin');
+    exit;
 }

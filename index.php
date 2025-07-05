@@ -18,7 +18,11 @@ try {
             displayAddProjectForm(); 
         } elseif ($_GET['page'] == 'submit-project') {
             addProject(); 
-        } elseif ($_GET['page'] == 'delete-project') {
+        } elseif ($_GET['page'] === 'edit') {
+            displayEditProjectForm();
+        } elseif ($_GET['page'] === 'update-project') {
+            updateProject();
+        } elseif ($_GET['page'] == 'delete') {
             deleteProject();
         }else {
             throw new Exception('Page introuvable');

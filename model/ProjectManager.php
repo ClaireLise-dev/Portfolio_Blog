@@ -48,10 +48,47 @@ class ProjectManager extends Manager
 
     return $requete->execute();
 }
-    
-    public function deleteProject(int $id, string $type) {
-        $bdd = $this->connection();
-        $requete = $bdd->prepare("DELETE FROM $type WHERE id = ?");
-        $requete->execute([$id]);
+
+public function updateProject($type, $id, $data)
+{
+    $fields = [];
+    $params = [];
+
+    foreach ($data as $key => $value) {
+        $fields[] = "$key = ?";
+        $params[] = $value;
     }
+
+    $bdd = $this->connection();
+    $params[] = $id; // Pour la clause WHERE
+
+    $sql = "UPDATE $type SET " . implode(', ', $fields) . " WHERE id = ?";
+
+    $requete = $bdd->prepare($sql);
+    return $requete->execute($params);
+}
+
+    
+public function deleteProject(int $id, string $type): bool {
+    $bdd = $this->connection();
+
+    // 1. Récupérer l’image
+    $requete = $bdd->prepare("SELECT image FROM $type WHERE id = :id");
+    $requete->execute(['id' => $id]);
+    $image = $requete->fetchColumn();
+
+    // 2. Supprimer le projet
+    $requete = $bdd->prepare("DELETE FROM $type WHERE id = :id");
+    $success = $requete->execute(['id' => $id]);
+
+    // 3. Supprimer l'image physique
+    if ($success && $image) {
+        $imagePath = 'public/img/' . $image;
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+    }
+    return $success;
+}
+
 }
