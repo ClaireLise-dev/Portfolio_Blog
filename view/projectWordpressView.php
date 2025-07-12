@@ -49,7 +49,7 @@
 
   <div class="d-flex flex-wrap gap-3 mt-4">
     <?php if (!empty($project['site_link'])): ?>
-      <a href="<?= htmlspecialchars($project['site_link']) ?>" target="_blank" class="btn btn-outline-secondary">
+      <a href="<?= htmlspecialchars($project['site_link']) ?>" target="_blank" class="btn btn-outline-primary">
         <i class="bi bi-box-arrow-up-right me-2"></i> Voir le site
       </a>
     <?php endif; ?>

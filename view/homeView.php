@@ -25,7 +25,7 @@
     </section>
 
     <section id="contact" class="sticky-bottom text-end my-5">
-        <a href="?page=contact" class="btn btn-outline-secondary rounded-pill">Contact</a>
+        <a href="?page=contact" class="btn btn-outline-primary rounded-pill">Contact</a>
 
     </section>
 </div>

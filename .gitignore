@@ -1,2 +1,4 @@
 # Node (front)
 node_modules/
+# Config
+config.php

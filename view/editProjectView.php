@@ -14,65 +14,65 @@
     <input type="hidden" name="type" value="<?= $type ?>">
 
     <div class="mb-3">
-      <label for="title" class="form-label">Titre</label>
+      <label for="title" class="form-label text-white">Titre</label>
       <input type="text" class="form-control bg-secondary text-white border-0" id="title" name="title" value="<?= htmlspecialchars($project['title']) ?>" required>
     </div>
 
     <div class="mb-3">
-      <label for="subtitle" class="form-label">Sous-titre</label>
+      <label for="subtitle" class="form-label text-white">Sous-titre</label>
       <input type="text" class="form-control bg-secondary text-white border-0" id="subtitle" name="subtitle" value="<?= htmlspecialchars($project['subtitle']) ?>">
     </div>
 
     <div class="mb-3">
-      <label for="image" class="form-label">Image (laisser vide si inchangée)</label>
+      <label for="image" class="form-label text-white">Image (laisser vide si inchangée)</label>
       <input type="file" class="form-control bg-secondary text-white border-0" id="image" name="image" accept="image/*">
     </div>
 
     <?php if ($type === 'projects' || $type === 'wordpress'): ?>
       <div id="common-description" class="mb-3">
-        <label for="description" class="form-label">Description</label>
+        <label for="description" class="form-label text-white">Description</label>
         <textarea class="form-control bg-secondary text-white border-0" id="description" name="description" rows="4"><?= htmlspecialchars($project['description']) ?></textarea>
       </div>
 
       <div id="features-group" class="mb-3">
-        <label for="features" class="form-label">Fonctionnalités (une par ligne)</label>
+        <label for="features" class="form-label text-white">Fonctionnalités (une par ligne)</label>
         <textarea class="form-control bg-secondary text-white border-0" id="features" name="features" rows="4"><?= htmlspecialchars($project['features']) ?></textarea>
       </div>
     <?php endif; ?>
 
     <?php if ($type === 'projects'): ?>
       <div id="technologies-group" class="mb-3">
-        <label for="technologies" class="form-label">Technologies (séparées par virgules)</label>
+        <label for="technologies" class="form-label text-white">Technologies (séparées par virgules)</label>
         <input type="text" class="form-control bg-secondary text-white border-0" id="technologies" name="technologies" value="<?= htmlspecialchars($project['technologies']) ?>">
       </div>
 
       <div id="site-link-group" class="mb-3">
-        <label for="site_link" class="form-label">Lien vers le site</label>
+        <label for="site_link" class="form-label text-white">Lien vers le site</label>
         <input type="url" class="form-control bg-secondary text-white border-0" id="site_link" name="site_link" value="<?= htmlspecialchars($project['site_link']) ?>">
       </div>
 
       <div id="github-link-group" class="mb-3">
-        <label for="github_link" class="form-label">Lien GitHub</label>
+        <label for="github_link" class="form-label text-white">Lien GitHub</label>
         <input type="url" class="form-control bg-secondary text-white border-0" id="github_link" name="github_link" value="<?= htmlspecialchars($project['github_link']) ?>">
       </div>
     <?php elseif ($type === 'wordpress'): ?>
       <div id="site-link-group" class="mb-3">
-        <label for="site_link" class="form-label">Lien vers le site</label>
+        <label for="site_link" class="form-label text-white">Lien vers le site</label>
         <input type="url" class="form-control bg-secondary text-white border-0" id="site_link" name="site_link" value="<?= htmlspecialchars($project['site_link']) ?>">
       </div>
 
       <div id="role-group" class="mb-3">
-        <label for="role" class="form-label">Rôle</label>
+        <label for="role" class="form-label text-white">Rôle</label>
         <textarea class="form-control bg-secondary text-white border-0" id="role" name="role" rows="3"><?= htmlspecialchars($project['role']) ?></textarea>
       </div>
     <?php elseif ($type === 'articles'): ?>
       <div id="content-group" class="mb-3">
-        <label for="content" class="form-label">Contenu de l'article</label>
+        <label for="content" class="form-label text-white">Contenu de l'article</label>
         <textarea class="form-control bg-secondary text-white border-0" id="content" name="content" rows="6"><?= htmlspecialchars($project['content']) ?></textarea>
       </div>
     <?php endif; ?>
 
-    <button type="submit" class="btn btn-outline-secondary w-100">Enregistrer</button>
+    <button type="submit" class="btn btn-outline-primary w-100">Enregistrer</button>
   </form>
 </main>
 

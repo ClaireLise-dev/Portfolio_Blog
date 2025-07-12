@@ -18,7 +18,7 @@ switch ($type) {
     die('Type invalide');
 }
 
-while ($project = $projects->fetch()):
+foreach($projects as $project):
 ?>
 
 
@@ -38,5 +38,4 @@ while ($project = $projects->fetch()):
 </div>
   </a>
   </div>
-
-<?php endwhile; ?>
+<?php endforeach; ?>
