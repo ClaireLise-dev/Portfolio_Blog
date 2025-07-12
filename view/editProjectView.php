@@ -76,4 +76,5 @@
   </form>
 </main>
 
-<?php $content = ob_get_clean(); require('base.php'); ?>
+<?php $content = ob_get_clean();
+require('base.php'); ?>

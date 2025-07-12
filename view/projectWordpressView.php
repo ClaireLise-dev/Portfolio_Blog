@@ -32,7 +32,7 @@
       </ul>
     </section>
   <?php endif; ?>
- 
+
 
   <?php if (!empty($project['features'])): ?>
     <section class="mb-5">

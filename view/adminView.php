@@ -1,4 +1,6 @@
-<?php if (session_status() === PHP_SESSION_NONE) { session_start(); } 
+<?php if (session_status() === PHP_SESSION_NONE) {
+  session_start();
+}
 if (!isset($_SESSION['admin'])) {
   header('Location: ?page=login');
   exit;
@@ -20,8 +22,8 @@ if (!isset($_SESSION['admin'])) {
       <div class="d-flex justify-content-between align-items-center border-bottom py-2">
         <strong><?= htmlspecialchars($project['title']) ?></strong>
         <div>
-        <a href="?page=edit&id=<?= $project['id'] ?>&type=projects" class="btn btn-sm btn-outline-secondary ms-2">Modifier</a>
-        <a href="?page=delete&id=<?= $project['id'] ?>&type=projects" class="btn btn-sm btn-outline-secondary ms-2">Supprimer</a>
+          <a href="?page=edit&id=<?= $project['id'] ?>&type=projects" class="btn btn-sm btn-outline-secondary ms-2">Modifier</a>
+          <a href="?page=delete&id=<?= $project['id'] ?>&type=projects" class="btn btn-sm btn-outline-secondary ms-2">Supprimer</a>
         </div>
       </div>
     <?php endforeach; ?>
@@ -33,8 +35,8 @@ if (!isset($_SESSION['admin'])) {
       <div class="d-flex justify-content-between align-items-center border-bottom py-2">
         <strong><?= htmlspecialchars($wp['title']) ?></strong>
         <div>
-        <a href="?page=edit&id=<?= $wp['id'] ?>&type=wordpress" class="btn btn-sm btn-outline-secondary ms-2">Modifier</a>
-        <a href="?page=delete&id=<?= $wp['id'] ?>&type=wordpress" class="btn btn-sm btn-outline-secondary ms-2">Supprimer</a>
+          <a href="?page=edit&id=<?= $wp['id'] ?>&type=wordpress" class="btn btn-sm btn-outline-secondary ms-2">Modifier</a>
+          <a href="?page=delete&id=<?= $wp['id'] ?>&type=wordpress" class="btn btn-sm btn-outline-secondary ms-2">Supprimer</a>
         </div>
       </div>
     <?php endforeach; ?>
@@ -47,8 +49,8 @@ if (!isset($_SESSION['admin'])) {
       <div class="d-flex justify-content-between align-items-centerborder-bottom py-2">
         <strong><?= htmlspecialchars($article['title']) ?></strong>
         <div>
-        <a href="?page=edit&id=<?= $article['id'] ?>&type=articles" class="btn btn-sm btn-outline-secondary ms-2">Modifier</a>
-        <a href="?page=delete&id=<?= $article['id'] ?>&type=articles" class="btn btn-sm btn-outline-secondary ms-2">Supprimer</a>
+          <a href="?page=edit&id=<?= $article['id'] ?>&type=articles" class="btn btn-sm btn-outline-secondary ms-2">Modifier</a>
+          <a href="?page=delete&id=<?= $article['id'] ?>&type=articles" class="btn btn-sm btn-outline-secondary ms-2">Supprimer</a>
         </div>
       </div>
     <?php endforeach; ?>

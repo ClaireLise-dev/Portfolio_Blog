@@ -51,8 +51,6 @@ portfolio/
 └── README.md
 ```
 
-## 🚀 Lancer le projet en local
-
 ## 🙋‍♀️ À propos
 
 Je suis développeuse web en reconversion et violoncelliste professionnelle.  

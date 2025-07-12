@@ -73,4 +73,5 @@
     <button type="submit" class="btn btn-outline-secondary w-100">Ajouter</button>
   </form>
 </main>
-<?php $content = ob_get_clean(); require('base.php'); ?>
+<?php $content = ob_get_clean();
+require('base.php'); ?>
