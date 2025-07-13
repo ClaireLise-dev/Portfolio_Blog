@@ -1,6 +1,8 @@
 <?php 
-
-require('controller/Controller.php');
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+require('controller/controller.php');
 
 try {
     if (isset($_GET['page'])) {
@@ -24,6 +26,8 @@ try {
             updateProject();
         } elseif ($_GET['page'] == 'delete') {
             deleteProject();
+        }elseif ($_GET['page'] === 'logout') {
+            logoutAdmin();
         }else {
             throw new Exception('Page introuvable');
         }

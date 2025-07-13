@@ -5,14 +5,16 @@ require('model/ContactManager.php');
 require('model/ProjectManager.php');
 require('model/AdminManager.php');
 
-function displayHome() {
+function displayHome()
+{
     $model = new HomeManager();
     $projects = $model->getProjects();
     require('view/homeView.php');
 }
 
-function displayContact() {
-    $model= new ContactManager();
+function displayContact()
+{
+    $model = new ContactManager();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $name = htmlspecialchars($_POST['name']);
         $email = htmlspecialchars($_POST['email']);
@@ -23,11 +25,12 @@ function displayContact() {
         } else {
             $errorMessage = "Une erreur est survenue lors de l'envoi de votre message.";
         }
-    }               
+    }
     require('view/contactView.php');
 }
 
-function displayProject() {
+function displayProject()
+{
     if (!isset($_GET['id']) || !isset($_GET['type'])) {
         $errorMessage = "Projet introuvable.";
         require('view/projectWebView.php');
@@ -37,7 +40,7 @@ function displayProject() {
     $id = (int) $_GET['id'];
     $type = $_GET['type'];
 
-    $manager = new ProjectManager(); 
+    $manager = new ProjectManager();
     $project = $manager->getProjectById($id, $type);
 
     if (!$project) {
@@ -57,8 +60,13 @@ function displayProject() {
     }
 }
 
-function displayLoginForm(){
+function displayLoginForm()
+{
     session_start();
+    if (isset($_SESSION['admin'])) {
+        header('Location: ?page=admin');
+        exit;
+    }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = $_POST['email'];
@@ -73,17 +81,37 @@ function displayLoginForm(){
             if ($admin && password_verify($password, $admin['password'])) {
                 $_SESSION['admin'] = $admin['email'];
                 $successMessage = "Connexion réussie !";
+
+                if (!empty($_POST['remember_me'])) {
+                    $token = bin2hex(random_bytes(32));
+                    setcookie('remember_token', $token, time() + 3600 * 24 * 30, '/', '', false, true);
+                    $adminManager->storeRememberToken($admin['id'], $token);
+                }
+
                 header('Location: ?page=admin');
+                exit;
             } else {
                 $errorMessage = "Email ou mot de passe incorrect.";
             }
         }
     }
+
     require('view/loginView.php');
 }
 
-function displayAdmin() {
+function displayAdmin()
+{
     session_start();
+
+    if (!isset($_SESSION['admin']) && isset($_COOKIE['remember_token'])) {
+        $adminManager = new AdminManager();
+        $admin = $adminManager->getAdminByToken($_COOKIE['remember_token']);
+
+        if ($admin) {
+            $_SESSION['admin'] = $admin['email'];
+        }
+    }
+
     if (!isset($_SESSION['admin'])) {
         header('Location: ?page=login');
         exit;
@@ -97,12 +125,14 @@ function displayAdmin() {
     require('view/adminView.php');
 }
 
-function displayAddProjectForm() {
+function displayAddProjectForm()
+{
     require('view/addProjectView.php');
 }
 
 
-function addProject() {
+function addProject()
+{
     session_start();
     if (!isset($_SESSION['admin'])) {
         header('Location: ?page=login');
@@ -186,7 +216,8 @@ function displayEditProjectForm()
     require 'view/editProjectView.php';
 }
 
-function updateProject() {
+function updateProject()
+{
     session_start();
     if (!isset($_SESSION['admin'])) {
         header('Location: ?page=login');
@@ -254,7 +285,8 @@ function updateProject() {
 
 
 
-function deleteProject() {
+function deleteProject()
+{
     session_start();
     if (!isset($_SESSION['admin'])) {
         header('Location: ?page=show-login');
@@ -273,5 +305,24 @@ function deleteProject() {
     $manager->deleteProject((int) $id, $type);
 
     header('Location: ?page=admin');
+    exit;
+}
+
+function logoutAdmin() {
+    session_start();
+    if (isset($_COOKIE['remember_token'])) {
+        setcookie('remember_token', '', time() - 3600, '/');
+
+        $adminManager = new AdminManager();
+
+        if (isset($_SESSION['admin'])) {
+            $admin = $adminManager->getAdminByEmail($_SESSION['admin']);
+            if ($admin) {
+                $adminManager->storeRememberToken($admin['id'], null);
+            }
+        }
+    }
+    session_destroy();
+    header('Location: ?page=home');
     exit;
 }

@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (isset($_SESSION['admin']) || isset($_COOKIE['remember_token'])) {
+    $link = '?page=admin';
+    $showLogout = true;
+} else {
+    $link = '?page=login';
+    $showLogout = false;
+}
+?>
+
+
 <html lang="fr">
 
 <head>
@@ -42,20 +57,14 @@
     </main>
     <footer> 
         <div class="text-center pb-3">
-            <a href="https://github.com/ClaireLise-dev" target="_blank" class="mx-2" aria-label="GitHub">
-                <i class="bi bi-github fs-3"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/clairelisedemettre" target="_blank" class="mx-2" aria-label="LinkedIn">
-                <i class="bi bi-linkedin fs-3"></i>
-            </a>
+             <a href="https://github.com/ClaireLise-dev" target="_blank" class="mx-2" aria-label="GitHub"><i class="bi bi-github fs-4"></i></a><a href="https://www.linkedin.com/in/clairelisedemettre" target="_blank" class="mx-2" aria-label="LinkedIn"><i class="bi bi-linkedin fs-4"></i></a>
         </div>
         <div class="container text-center text-white">
             <p>&copy;<?= date('Y') ?> Claire-Lise Démettre. Tous droits réservés.
-            <a href="?page=login" class="admin-icon" title="Connexion admin">
-            <i class="bi bi-gear-fill"></i>
-            </a>
+                <a href="<?= $link ?>" class="admin-icon" title="Espace admin">
+                    <i class="bi bi-gear-fill ms-2"></i></a><?php if ($showLogout): ?><a href="index.php?page=logout" title="Déconnexion"><i class="bi bi-box-arrow-right ms-2"></i></a><?php endif; ?>
             </p>
-
+            
         </div>
        
     </footer>
