@@ -28,16 +28,7 @@
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="?page=home">ACCUEIL</a></li>
                         <li class="nav-item"><a class="nav-link" href="?page=contact">CONTACT</a></li>
-                        <li class="nav-item"><a class="nav-link" href="?page=login">CONNEXION</a></li>
                     </ul>
-                    <div>
-                        <a href="https://github.com/ClaireLise-dev" target="_blank" class="ms-md-3 text-body" aria-label="GitHub">
-                            <i class="bi bi-github fs-6 text-primary"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/clairelisedemettre" target="_blank" class="text-body aria-label=" LinkedIn">
-                            <i class="bi bi-linkedin fs-6 text-primary"></i>
-                        </a>
-                    </div>
                 </div>
             </div>
         </nav>
@@ -49,10 +40,24 @@
     <main id="page" class="page-enter">
         <?= $content ?>
     </main>
-    <footer>
-        <div class="container text-center text-white py-4">
-            <p>&copy;<?= date('Y') ?> Claire-Lise Démettre. Tous droits réservés.</p>
+    <footer> 
+        <div class="text-center pb-3">
+            <a href="https://github.com/ClaireLise-dev" target="_blank" class="mx-2" aria-label="GitHub">
+                <i class="bi bi-github fs-3"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/clairelisedemettre" target="_blank" class="mx-2" aria-label="LinkedIn">
+                <i class="bi bi-linkedin fs-3"></i>
+            </a>
         </div>
+        <div class="container text-center text-white">
+            <p>&copy;<?= date('Y') ?> Claire-Lise Démettre. Tous droits réservés.
+            <a href="?page=login" class="admin-icon" title="Connexion admin">
+            <i class="bi bi-gear-fill"></i>
+            </a>
+            </p>
+
+        </div>
+       
     </footer>
     <script src="./assets/index.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

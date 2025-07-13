@@ -52,7 +52,7 @@ function displayProject() {
             require('view/projectWebView.php');
             break;
         default:
-            require('view/ArticleView.php');
+            require('view/articleView.php');
             break;
     }
 }
