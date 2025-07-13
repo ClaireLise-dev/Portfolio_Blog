@@ -49,7 +49,7 @@
         <?= $content ?>
     </main>
     <footer>
-        <div class="container text-center text-secondary py-4">
+        <div class="container text-center text-white py-4">
             <p>&copy;<?= date('Y') ?> Claire-Lise Démettre. Tous droits réservés.</p>
         </div>
     </footer>
