@@ -35,36 +35,40 @@ if (alertBox) {
 }
 
 const typeSelect = document.getElementById("type");
-const groups = {
-  projects: [
-    "common-description",
-    "features-group",
-    "technologies-group",
-    "site-link-group",
-    "github-link-group",
-  ],
-  wordpress: [
-    "common-description",
-    "features-group",
-    "role-group",
-    "site-link-group",
-  ],
-  articles: ["content-group"],
-};
+if (typeSelect) {
+  const groups = {
+    projects: [
+      "common-description",
+      "features-group",
+      "technologies-group",
+      "site-link-group",
+      "github-link-group",
+    ],
+    wordpress: [
+      "common-description",
+      "features-group",
+      "role-group",
+      "site-link-group",
+    ],
+    articles: ["content-group"],
+  };
 
-typeSelect.addEventListener("change", () => {
-  document
-    .querySelectorAll(".mb-3")
-    .forEach((div) => div.classList.add("d-none"));
-  document.getElementById("title").parentElement.classList.remove("d-none");
-  document.getElementById("subtitle").parentElement.classList.remove("d-none");
-  document.getElementById("type").parentElement.classList.remove("d-none");
-  document.getElementById("image").parentElement.classList.remove("d-none");
+  typeSelect.addEventListener("change", () => {
+    document
+      .querySelectorAll(".mb-3")
+      .forEach((div) => div.classList.add("d-none"));
+    document.getElementById("title").parentElement.classList.remove("d-none");
+    document
+      .getElementById("subtitle")
+      .parentElement.classList.remove("d-none");
+    document.getElementById("type").parentElement.classList.remove("d-none");
+    document.getElementById("image").parentElement.classList.remove("d-none");
 
-  const selected = typeSelect.value;
-  if (groups[selected]) {
-    groups[selected].forEach((id) =>
-      document.getElementById(id).classList.remove("d-none")
-    );
-  }
-});
+    const selected = typeSelect.value;
+    if (groups[selected]) {
+      groups[selected].forEach((id) =>
+        document.getElementById(id).classList.remove("d-none")
+      );
+    }
+  });
+}
