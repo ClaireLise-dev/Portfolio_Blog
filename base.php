@@ -27,7 +27,7 @@ if (isset($_SESSION['admin']) || isset($_COOKIE['remember_token'])) {
     <title>Claire-Lise Démettre - Portfolio</title>
 </head>
 
-<body>
+<body class="min-vh-100 d-flex flex-column">
     <header class="sticky-top">
         <nav class="navbar navbar-dark bg-secondary navbar-expand-md">
 
@@ -52,7 +52,7 @@ if (isset($_SESSION['admin']) || isset($_COOKIE['remember_token'])) {
 
         </nav>
     </header>
-    <main id="page" class="page-enter">
+    <main id="page" class="page-enter flex-grow-1">
         <?= $content ?>
     </main>
     <footer> 
