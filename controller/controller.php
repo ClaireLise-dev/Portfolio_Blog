@@ -1,10 +1,12 @@
 <?php
 
+// Inclusion des gestionnaires de données (modèles)
 require('model/HomeManager.php');
 require('model/ContactManager.php');
 require('model/ProjectManager.php');
 require('model/AdminManager.php');
 
+// Affiche la page d’accueil avec les projets récupérés via HomeManager
 function displayHome()
 {
     $model = new HomeManager();
@@ -12,14 +14,17 @@ function displayHome()
     require('view/homeView.php');
 }
 
+// Affiche la page de contact et traite l’envoi du formulaire si POST
 function displayContact()
 {
     $model = new ContactManager();
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Sécurisation des entrées utilisateur
         $name = htmlspecialchars($_POST['name']);
         $email = htmlspecialchars($_POST['email']);
         $message = htmlspecialchars($_POST['message']);
 
+        // Enregistrement du message
         if ($model->saveMessage($name, $email, $message)) {
             $successMessage = "Votre message a été envoyé avec succès.";
         } else {
@@ -29,6 +34,7 @@ function displayContact()
     require('view/contactView.php');
 }
 
+// Affiche un projet selon son type et son ID (web, wordpress, article)
 function displayProject()
 {
     if (!isset($_GET['id']) || !isset($_GET['type'])) {
@@ -39,7 +45,6 @@ function displayProject()
 
     $id = (int) $_GET['id'];
     $type = $_GET['type'];
-
     $manager = new ProjectManager();
     $project = $manager->getProjectById($id, $type);
 
@@ -47,6 +52,7 @@ function displayProject()
         $errorMessage = "Projet non trouvé.";
     }
 
+    // Choix de la vue à afficher selon le type de projet
     switch ($type) {
         case 'wordpress':
             require('view/projectWordpressView.php');
@@ -60,6 +66,7 @@ function displayProject()
     }
 }
 
+// Affiche le formulaire de connexion et gère la connexion + cookie « remember me »
 function displayLoginForm()
 {
     session_start();
@@ -82,6 +89,7 @@ function displayLoginForm()
                 $_SESSION['admin'] = $admin['email'];
                 $successMessage = "Connexion réussie !";
 
+                // Gestion du cookie « se souvenir de moi »
                 if (!empty($_POST['remember_me'])) {
                     $token = bin2hex(random_bytes(32));
                     setcookie('remember_token', $token, time() + 3600 * 24 * 30, '/', '', false, true);
@@ -99,14 +107,15 @@ function displayLoginForm()
     require('view/loginView.php');
 }
 
+// Affiche la page d'administration avec liste des projets (si connecté)
 function displayAdmin()
 {
     session_start();
 
+    // Connexion automatique via cookie si présent
     if (!isset($_SESSION['admin']) && isset($_COOKIE['remember_token'])) {
         $adminManager = new AdminManager();
         $admin = $adminManager->getAdminByToken($_COOKIE['remember_token']);
-
         if ($admin) {
             $_SESSION['admin'] = $admin['email'];
         }
@@ -125,12 +134,13 @@ function displayAdmin()
     require('view/adminView.php');
 }
 
+// Affiche le formulaire d’ajout de projet
 function displayAddProjectForm()
 {
     require('view/addProjectView.php');
 }
 
-
+// Traite l’ajout d’un nouveau projet depuis le formulaire admin
 function addProject()
 {
     session_start();
@@ -141,12 +151,13 @@ function addProject()
 
     $manager = new ProjectManager();
 
+    // Récupération des données du formulaire
     $type = $_POST['type'] ?? '';
     $title = $_POST['title'] ?? '';
     $subtitle = $_POST['subtitle'] ?? '';
     $image = $_FILES['image']['name'] ?? '';
 
-
+    // Téléchargement de l’image
     if ($image && isset($_FILES['image']['tmp_name'])) {
         $target = 'public/img/' . basename($image);
         move_uploaded_file($_FILES['image']['tmp_name'], $target);
@@ -158,6 +169,7 @@ function addProject()
         'image' => $image
     ];
 
+    // Ajout des champs spécifiques selon le type
     if ($type === 'projects') {
         $data += [
             'description' => $_POST['description'] ?? '',
@@ -183,6 +195,7 @@ function addProject()
         return;
     }
 
+    // Enregistrement en base
     $success = $manager->insertProject($type, $data);
 
     if ($success) {
@@ -194,6 +207,7 @@ function addProject()
     require('view/addProjectView.php');
 }
 
+// Affiche le formulaire d’édition pour un projet donné
 function displayEditProjectForm()
 {
     if (!isset($_GET['id']) || !isset($_GET['type'])) {
@@ -204,9 +218,7 @@ function displayEditProjectForm()
 
     $id = $_GET['id'];
     $type = $_GET['type'];
-
     $projectManager = new ProjectManager();
-
     $project = $projectManager->getProjectById($id, $type);
 
     if (!$project) {
@@ -216,6 +228,7 @@ function displayEditProjectForm()
     require 'view/editProjectView.php';
 }
 
+// Traite la mise à jour d’un projet existant
 function updateProject()
 {
     session_start();
@@ -232,6 +245,7 @@ function updateProject()
     $subtitle = $_POST['subtitle'] ?? '';
     $image = $_FILES['image']['name'] ?? '';
 
+    // Gestion de l’image : si pas changée, garder l’ancienne
     if ($image && isset($_FILES['image']['tmp_name']) && $_FILES['image']['tmp_name']) {
         $target = 'public/img/' . basename($image);
         move_uploaded_file($_FILES['image']['tmp_name'], $target);
@@ -283,8 +297,7 @@ function updateProject()
     }
 }
 
-
-
+// Supprime un projet (admin uniquement)
 function deleteProject()
 {
     session_start();
@@ -308,11 +321,12 @@ function deleteProject()
     exit;
 }
 
-function logoutAdmin() {
+// Déconnecte l’admin et supprime le cookie de connexion automatique
+function logoutAdmin()
+{
     session_start();
     if (isset($_COOKIE['remember_token'])) {
         setcookie('remember_token', '', time() - 3600, '/');
-
         $adminManager = new AdminManager();
 
         if (isset($_SESSION['admin'])) {
